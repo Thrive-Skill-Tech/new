@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI & Automation — Thrive Skill Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#8B5CF6;
+    --purple-dark:#7645E0;
+    --lavender:#FCF7FF;
+    --gold:#FADF63;
+    --orange:#FFA552;
+    --midnight:#331E38;
+    --aubergine:#16001E;
+    --line:rgba(22,0,30,0.10);
+    --white:#FFFFFF;
+    --r-sm:8px; --r-input:12px; --r-btn:14px; --r-card:24px; --r-hero:32px;
+    --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--lavender);
+    color:var(--aubergine);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-0.02em; color:var(--aubergine);}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1200px; margin:0 auto; padding:0 var(--s5);}
+  @media (max-width:640px){ .wrap{padding:0 var(--s4);} }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:15px;
+    padding:13px 26px; border-radius:var(--r-btn); border:none; cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    white-space:nowrap;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--purple); color:#fff;}
+  .btn-primary:hover{background:var(--purple-dark); box-shadow:0 12px 24px -8px rgba(139,92,246,0.45);}
+  .btn-secondary{background:#fff; color:var(--aubergine); border:1px solid var(--line);}
+  .btn-secondary:hover{border-color:var(--aubergine);}
+  .btn-ghost{background:transparent; color:var(--purple); padding:13px 8px;}
+  .btn-ghost:hover{color:var(--purple-dark);}
+  .btn-accent{background:var(--orange); color:var(--aubergine);}
+  .btn-accent:hover{box-shadow:0 12px 24px -8px rgba(255,165,82,0.5);}
+  .btn-block{width:100%;}
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(252,247,255,0.85); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand svg{height:30px; width:auto;}
+  .brand-word{font-family:'Space Grotesk'; font-weight:700; font-size:16px; letter-spacing:-0.01em;}
+  .brand-word b{color:var(--purple);}
+  .nav-links{display:flex; align-items:center; gap:var(--s6); font-size:14.5px; font-weight:500;}
+  .nav-links a{color:var(--midnight); opacity:0.8;}
+  .nav-links a:hover{opacity:1; color:var(--purple);}
+  .nav-cta{display:flex; align-items:center; gap:12px;}
+  .burger{display:none;}
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .burger{display:block; background:none; border:none; cursor:pointer;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; overflow:hidden; padding:var(--s9) 0 var(--s8);
+    background:var(--aubergine); color:#fff;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(139,92,246,0.18), transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(139,92,246,0.12), transparent 40%),
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size:auto, auto, 34px 34px, 34px 34px;
+  }
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:var(--s7); align-items:center;}
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr; gap:var(--s6);} }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:999px;
+    padding:6px 14px; font-size:13px; font-weight:600; color:var(--gold);
+    margin-bottom:var(--s5);
+  }
+  .eyebrow span.dot{width:6px; height:6px; border-radius:50%; background:var(--orange);}
+  .hero h1{color:#fff; font-size:54px; line-height:1.06; margin-bottom:var(--s5);}
+  @media (max-width:640px){ .hero h1{font-size:36px;} }
+  .hero p.lead{font-size:18.5px; color:rgba(255,255,255,0.68); max-width:500px; margin-bottom:var(--s6);}
+  .hero-ctas{display:flex; gap:var(--s4); flex-wrap:wrap; margin-bottom:var(--s7);}
+  .hero-trust{display:flex; gap:var(--s6); flex-wrap:wrap;}
+  .hero-trust .item{display:flex; align-items:center; gap:8px; font-size:13.5px; font-weight:500; color:rgba(255,255,255,0.75);}
+  .hero-trust svg{color:var(--gold); flex:none;}
+
+  /* ---------- Gen-Z accents ---------- */
+  .grad-text{
+    background:linear-gradient(90deg, var(--purple) 0%, var(--gold) 50%, var(--orange) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .marquee{
+    background:var(--purple); color:#fff; overflow:hidden; white-space:nowrap;
+    border-top:1px solid rgba(255,255,255,0.15); border-bottom:1px solid rgba(255,255,255,0.15);
+  }
+  .marquee-track{display:inline-flex; align-items:center; animation:scroll 26s linear infinite;}
+  .marquee-track span{
+    display:inline-flex; align-items:center; gap:10px; padding:12px 28px;
+    font-family:'Space Grotesk'; font-weight:600; font-size:14.5px; letter-spacing:0.02em; text-transform:uppercase;
+  }
+  @keyframes scroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion: reduce){ .marquee-track{animation:none;} }
+
+  .sticker{
+    display:inline-flex; align-items:center; gap:6px; font-family:'Space Grotesk'; font-weight:700; font-size:12px;
+    background:var(--gold); color:var(--aubergine); padding:6px 13px; border-radius:999px;
+    transform:rotate(-3deg); box-shadow:0 6px 14px -4px rgba(250,223,99,0.6);
+  }
+  .chat-bubble{
+    position:absolute; background:#fff; border-radius:18px 18px 18px 4px; padding:10px 16px;
+    font-family:'Inter'; font-weight:600; font-size:13px; color:var(--aubergine);
+    box-shadow:0 16px 32px -12px rgba(0,0,0,0.35);
+    animation:float 5s ease-in-out infinite;
+  }
+  .chat-bubble.two{border-radius:18px 18px 4px 18px; background:var(--gold);}
+  @keyframes float{0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);}}
+  @media (prefers-reduced-motion: reduce){ .chat-bubble{animation:none;} }
+
+  .spotlight{position:relative; overflow:hidden;}
+  .spotlight::before{
+    content:""; position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .3s ease;
+    background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(139,92,246,0.10), transparent 70%);
+  }
+  .spotlight:hover::before{opacity:1;}
+
+  /* Signature element: a live agent console — shows the product instead of describing it */
+  .console{
+    background:#0F0716; border:1px solid rgba(139,92,246,0.35); border-radius:var(--r-hero);
+    box-shadow:0 40px 80px -30px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02) inset;
+    overflow:hidden;
+  }
+  .console-bar{
+    display:flex; align-items:center; gap:8px; padding:14px 18px;
+    background:rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .console-bar .dot{width:10px; height:10px; border-radius:50%;}
+  .console-bar .dot:nth-child(1){background:#FF5F57;}
+  .console-bar .dot:nth-child(2){background:#FEBC2E;}
+  .console-bar .dot:nth-child(3){background:#28C840;}
+  .console-title{margin-left:8px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:rgba(255,255,255,0.4);}
+  .console-body{padding:22px 20px 26px; min-height:280px;}
+  .console-line{
+    font-family:'IBM Plex Mono',monospace; font-size:13.5px; line-height:1.9; white-space:pre-wrap;
+    color:rgba(255,255,255,0.85);
+  }
+  .console-line .prompt{color:var(--purple);}
+  .console-line .ok{color:#6EE7B7;}
+  .console-line .val{color:var(--gold);}
+  .console-line .comment{color:rgba(255,255,255,0.4);}
+  .console-cursor{display:inline-block; width:8px; height:15px; background:var(--purple); vertical-align:middle; margin-left:2px; animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  .console-stat{
+    display:inline-flex; align-items:center; gap:8px; margin-top:var(--s6);
+    background:rgba(139,92,246,0.12); border:1px solid rgba(139,92,246,0.3); border-radius:999px;
+    padding:8px 16px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--gold);
+  }
+  @media (prefers-reduced-motion: reduce){ .console-cursor{animation:none;} }
+
+  /* ---------- Section basics ---------- */
+  section{padding:var(--s9) 0;}
+  .section-head{max-width:640px; margin-bottom:var(--s7);}
+  .kicker{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--purple); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:var(--s3);}
+  .section-head h2{font-size:38px; line-height:1.15; margin-bottom:var(--s4);}
+  @media (max-width:640px){ .section-head h2{font-size:28px;} }
+  .section-head p{font-size:17px; color:var(--midnight); opacity:0.8;}
+
+  /* ---------- Features bar ---------- */
+  .features-band{background:var(--midnight); color:#fff;}
+  .features-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s6);}
+  @media (max-width:760px){ .features-grid{grid-template-columns:1fr;} }
+  .feature{display:flex; gap:var(--s4);}
+  .feature .ico{
+    flex:none; width:44px; height:44px; border-radius:12px;
+    background:rgba(139,92,246,0.25); display:flex; align-items:center; justify-content:center; color:var(--purple);
+  }
+  .feature h4{color:#fff; font-size:16px; margin-bottom:4px;}
+  .feature p{color:rgba(255,255,255,0.65); font-size:14px;}
+
+  /* ---------- Course cards (bootcamp use only now) ---------- */
+  .course-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s5);}
+  @media (max-width:900px){ .course-grid{grid-template-columns:1fr;} }
+  .course-card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--r-card);
+    padding:var(--s6); display:flex; flex-direction:column; gap:var(--s4);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .course-card:hover{transform:translateY(-4px); box-shadow:0 24px 48px -20px rgba(22,0,30,0.16);}
+  .course-card.featured{border-color:var(--purple); position:relative;}
+  .ribbon{
+    position:absolute; top:-12px; right:24px; background:var(--gold); color:var(--aubergine);
+    font-size:12px; font-weight:700; padding:5px 12px; border-radius:999px; font-family:'IBM Plex Mono',monospace;
+  }
+  .course-tag{
+    width:40px; height:40px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+  }
+  .tag-purple{background:rgba(139,92,246,0.14); color:var(--purple);}
+  .tag-orange{background:rgba(255,165,82,0.18); color:#C96A1E;}
+  .tag-gold{background:rgba(250,223,99,0.35); color:#8A6E00;}
+  .course-card h3{font-size:21px; margin-bottom:2px;}
+  .course-card .desc{font-size:14.5px; color:var(--midnight); opacity:0.75; flex:1;}
+  .course-topics{list-style:none; display:flex; flex-direction:column; gap:8px; font-size:13.5px; color:var(--midnight);}
+  .course-topics li{display:flex; align-items:center; gap:8px;}
+  .course-topics svg{flex:none; color:var(--purple);}
+  .price-row{display:flex; align-items:baseline; justify-content:space-between; border-top:1px solid var(--line); padding-top:var(--s4); margin-top:auto;}
+  .price{font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:500; color:var(--aubergine);}
+  .price span{font-size:13px; color:var(--midnight); opacity:0.6; font-family:'Inter';}
+
+  /* ---------- Verifiable syllabus tabs ---------- */
+  .course-tabs{display:flex; gap:10px; margin-bottom:var(--s6); flex-wrap:wrap;}
+  .tab-btn{
+    background:#fff; border:1px solid var(--line); border-radius:999px; padding:11px 22px;
+    font-family:'Inter'; font-weight:600; font-size:14px; cursor:pointer; color:var(--midnight); opacity:0.55;
+    transition:all .15s ease;
+  }
+  .tab-btn.active{background:var(--aubergine); color:#fff; opacity:1; border-color:var(--aubergine);}
+  .tab-btn:not(.active):hover{opacity:0.85; border-color:var(--aubergine);}
+  .syllabus-panel{display:none;}
+  .syllabus-panel.active{display:block; animation:fadeIn .25s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  .syllabus-card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--r-hero); padding:var(--s7);
+    display:grid; grid-template-columns:0.95fr 1.05fr; gap:var(--s7);
+  }
+  @media (max-width:860px){ .syllabus-card{grid-template-columns:1fr; padding:var(--s6);} }
+  .syllabus-left h3{font-size:27px; margin-bottom:10px;}
+  .syllabus-left .desc{font-size:15px; color:var(--midnight); opacity:0.75; margin-bottom:var(--s6);}
+  .syllabus-stats{display:flex; gap:var(--s6); margin-bottom:var(--s6); flex-wrap:wrap;}
+  .stat-block .num{font-family:'IBM Plex Mono',monospace; font-size:24px; color:var(--purple);}
+  .stat-block .label{font-size:12px; color:var(--midnight); opacity:0.6; margin-top:2px;}
+  .syllabus-price{
+    background:var(--lavender); border-radius:var(--r-card); padding:var(--s5);
+    display:flex; align-items:center; justify-content:space-between; gap:var(--s4); flex-wrap:wrap;
+  }
+  .syllabus-price .amt{font-family:'IBM Plex Mono',monospace; font-size:30px; color:var(--aubergine);}
+  .syllabus-price .per-hr{font-size:12.5px; color:var(--midnight); opacity:0.6; margin-top:2px;}
+  .module-list{
+    display:flex; flex-direction:column; gap:3px; max-height:420px; overflow-y:auto;
+    border:1px solid var(--line); border-radius:var(--r-card); padding:6px;
+  }
+  .module-row{
+    display:flex; justify-content:space-between; align-items:center; gap:var(--s4);
+    padding:11px 14px; border-radius:10px; font-size:13.5px; color:var(--aubergine);
+  }
+  .module-row:nth-child(odd){background:var(--lavender);}
+  .module-row .hrs{
+    flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:700; color:var(--purple-dark);
+    background:rgba(139,92,246,0.15); border-radius:50%;
+  }
+  .module-row .wk{
+    flex:none; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--purple-dark);
+    background:rgba(139,92,246,0.12); padding:4px 10px; border-radius:999px; white-space:nowrap;
+  }
+
+  /* ---------- Bootcamp ---------- */
+  .bootcamp{background:linear-gradient(180deg, var(--lavender) 0%, #F4EBFF 100%);}
+  .bootcamp-card{
+    background:var(--midnight); border-radius:var(--r-hero); padding:var(--s7);
+    display:grid; grid-template-columns:1fr 1fr; gap:var(--s7); align-items:center; color:#fff; position:relative; overflow:hidden;
+  }
+  @media (max-width:860px){ .bootcamp-card{grid-template-columns:1fr;} }
+  .bootcamp-card::after{
+    content:""; position:absolute; width:340px; height:340px; border-radius:50%;
+    background:radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%);
+    top:-100px; right:-100px;
+  }
+  .bootcamp-copy .eyebrow{background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.15); color:var(--gold);}
+  .bootcamp-copy h2{color:#fff; font-size:32px; margin-bottom:var(--s4);}
+  .bootcamp-copy p{color:rgba(255,255,255,0.72); margin-bottom:var(--s6); font-size:15.5px;}
+  .topic-grid{display:grid; grid-template-columns:1fr 1fr; gap:var(--s4); position:relative;}
+  .topic-pill{
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:var(--r-card);
+    padding:var(--s5); display:flex; flex-direction:column; gap:10px;
+  }
+  .topic-pill .ico{width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center;}
+  .topic-pill h4{color:#fff; font-size:15px;}
+  .topic-pill .p{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--gold);}
+  .topic-pill .dur{font-size:11.5px; color:rgba(255,255,255,0.55); text-transform:uppercase; letter-spacing:0.04em; margin-top:-4px;}
+
+  /* ---------- Why / values ---------- */
+  .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:var(--s5);}
+  @media (max-width:900px){ .why-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .why-grid{grid-template-columns:1fr;} }
+  .why-card{background:#fff; border:1px solid var(--line); border-radius:var(--r-card); padding:var(--s5);}
+  .why-card .ico{width:38px; height:38px; border-radius:10px; background:rgba(139,92,246,0.12); color:var(--purple); display:flex; align-items:center; justify-content:center; margin-bottom:var(--s4);}
+  .why-card h4{font-size:15.5px; margin-bottom:6px;}
+  .why-card p{font-size:13.5px; color:var(--midnight); opacity:0.7;}
+
+  /* ---------- Founders ---------- */
+  .founders-grid{display:grid; grid-template-columns:1fr 1fr; gap:var(--s6);}
+  @media (max-width:760px){ .founders-grid{grid-template-columns:1fr;} }
+  .founder-card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--r-hero);
+    padding:var(--s6); display:flex; gap:var(--s5); align-items:flex-start;
+  }
+  @media (max-width:520px){ .founder-card{flex-direction:column; align-items:center; text-align:center;} }
+  .founder-avatar{
+    flex:none; width:76px; height:76px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk'; font-weight:700; font-size:24px; color:#fff;
+  }
+  .founder-avatar.a{background:linear-gradient(135deg, var(--purple), #6d3fd6);}
+  .founder-avatar.b{background:linear-gradient(135deg, var(--orange), #e8863a);}
+  .founder-card h4{font-size:19px; margin-bottom:2px;}
+  .founder-role{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--purple);
+    background:rgba(139,92,246,0.1); padding:3px 11px; border-radius:999px; margin-bottom:12px;
+  }
+  .founder-card p.bio{font-size:14px; color:var(--midnight); opacity:0.75; line-height:1.65;}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{max-width:780px;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%; background:none; border:none; text-align:left; cursor:pointer;
+    display:flex; align-items:center; justify-content:space-between; gap:var(--s4);
+    padding:var(--s5) 0; font-family:'Space Grotesk'; font-weight:600; font-size:16.5px; color:var(--aubergine);
+  }
+  .faq-q .plus{
+    flex:none; width:26px; height:26px; border-radius:50%; background:rgba(139,92,246,0.1); color:var(--purple);
+    display:flex; align-items:center; justify-content:center; font-size:16px; transition:transform .2s ease;
+  }
+  .faq-item.open .faq-q .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .faq-a p{font-size:14.5px; color:var(--midnight); opacity:0.75; padding-bottom:var(--s5); max-width:640px;}
+
+  /* ---------- Enroll form ---------- */
+  .enroll{background:var(--aubergine); color:#fff;}
+  .enroll-grid{display:grid; grid-template-columns:1fr 1fr; gap:var(--s8); align-items:flex-start;}
+  @media (max-width:900px){ .enroll-grid{grid-template-columns:1fr; gap:var(--s6);} }
+  .enroll h2{color:#fff; font-size:34px; margin-bottom:var(--s4);}
+  .enroll p.lead{color:rgba(255,255,255,0.7); font-size:16px; margin-bottom:var(--s6); max-width:440px;}
+  .enroll-step{display:flex; gap:14px; margin-bottom:var(--s5);}
+  .enroll-step .num{
+    flex:none; width:30px; height:30px; border-radius:8px; background:rgba(139,92,246,0.25); color:var(--purple);
+    display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono'; font-size:13px;
+  }
+  .enroll-step h4{color:#fff; font-size:14.5px; margin-bottom:2px;}
+  .enroll-step p{color:rgba(255,255,255,0.6); font-size:13.5px;}
+
+  .form-card{background:#fff; border-radius:var(--r-hero); padding:var(--s6); color:var(--aubergine);}
+  .field{margin-bottom:var(--s4);}
+  .field label{display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:var(--midnight);}
+  .field input, .field select, .field textarea{
+    width:100%; border:1px solid var(--line); border-radius:var(--r-input); padding:12px 14px;
+    font-family:'Inter'; font-size:14.5px; background:var(--lavender); color:var(--aubergine);
+    outline:none; transition:border-color .15s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--purple); background:#fff;}
+  .field textarea{resize:vertical; min-height:80px;}
+  .form-foot{font-size:12.5px; color:var(--midnight); opacity:0.6; margin-top:var(--s3); text-align:center;}
+  .form-msg{display:none; font-size:13.5px; padding:12px 14px; border-radius:var(--r-input); margin-bottom:var(--s4); background:rgba(139,92,246,0.1); color:var(--purple-dark); font-weight:500;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--midnight); color:rgba(255,255,255,0.75); padding:var(--s8) 0 var(--s6);}
+  .foot-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:var(--s7); margin-bottom:var(--s7);}
+  @media (max-width:760px){ .foot-grid{grid-template-columns:1fr; gap:var(--s6);} }
+  .foot-brand{display:flex; align-items:center; gap:10px; margin-bottom:var(--s4);}
+  .foot-brand svg{height:26px; width:auto;}
+  footer h5{color:#fff; font-size:13px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:var(--s4); font-family:'Inter'; font-weight:600;}
+  footer ul{list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px;}
+  footer a:hover{color:#fff;}
+  .social-row{display:flex; gap:10px; margin-top:var(--s5);}
+  .social-row a{width:38px; height:38px; border-radius:10px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.1);}
+  .social-row a:hover{background:var(--purple); border-color:var(--purple);}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,0.1); padding-top:var(--s5); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:13px; color:rgba(255,255,255,0.5);}
+
+  /* WhatsApp float */
+  .wa-float{
+    position:fixed; bottom:22px; right:22px; z-index:60; background:#25D366; color:#fff;
+    width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 28px -8px rgba(0,0,0,0.35);
+  }
+
+/* ---------- Course detail page ---------- */
+.breadcrumb{display:flex; align-items:center; gap:8px; font-size:13.5px; color:rgba(255,255,255,0.6); margin-bottom:var(--s5);}
+.breadcrumb a{color:rgba(255,255,255,0.85); font-weight:500;}
+.breadcrumb a:hover{color:var(--gold);}
+.course-hero{
+  background:var(--aubergine); color:#fff; padding:var(--s8) 0 var(--s7);
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(139,92,246,0.18), transparent 45%),
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size:auto, 34px 34px, 34px 34px;
+}
+.course-hero h1{color:#fff; font-size:44px; line-height:1.1; margin-bottom:var(--s4); max-width:680px;}
+@media (max-width:640px){ .course-hero h1{font-size:30px;} }
+.course-hero p.lead{color:rgba(255,255,255,0.7); font-size:17px; max-width:560px; margin-bottom:var(--s6);}
+.course-hero-ctas{display:flex; gap:var(--s4); flex-wrap:wrap; align-items:center;}
+.course-hero-price{font-family:'IBM Plex Mono',monospace; font-size:20px; color:var(--gold);}
+.detail-wrap{padding:var(--s9) 0;}
+.detail-grid{display:grid; grid-template-columns:0.95fr 1.05fr; gap:var(--s8); align-items:start;}
+@media (max-width:900px){ .detail-grid{grid-template-columns:1fr; gap:var(--s6);} }
+.detail-side h4{font-size:15px; margin-bottom:var(--s3); text-transform:uppercase; letter-spacing:0.04em; color:var(--midnight); opacity:0.6;}
+.detail-list{list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:var(--s6);}
+.detail-list li{display:flex; gap:10px; font-size:14.5px; color:var(--aubergine);}
+.detail-list svg{flex:none; color:var(--purple); margin-top:2px;}
+.sticky-card{
+  position:sticky; top:96px; background:#fff; border:1px solid var(--line); border-radius:var(--r-hero);
+  padding:var(--s6);
+}
+.sticky-card .amt{font-family:'IBM Plex Mono',monospace; font-size:32px; color:var(--aubergine); margin-bottom:4px;}
+.sticky-card .amt-note{font-size:13px; color:var(--midnight); opacity:0.6; margin-bottom:var(--s5);}
+.rzp-box{
+  border:1px solid var(--line); border-radius:var(--r-card); padding:var(--s5);
+  margin-bottom:var(--s5); background:var(--lavender);
+}
+.rzp-box .rzp-label{
+  display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--midnight);
+  opacity:0.65; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:12px;
+}
+.rzp-divider{
+  display:flex; align-items:center; gap:12px; margin:var(--s5) 0;
+  font-size:12px; color:var(--midnight); opacity:0.5; text-transform:uppercase; letter-spacing:0.04em;
+}
+.rzp-divider::before, .rzp-divider::after{content:""; flex:1; height:1px; background:var(--line);}
+.related-strip{background:var(--midnight); padding:var(--s7) 0;}
+.related-strip h3{color:#fff; font-size:20px; margin-bottom:var(--s5);}
+.related-cards{display:flex; gap:var(--s4); flex-wrap:wrap;}
+.related-card{
+  flex:1; min-width:220px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12);
+  border-radius:var(--r-card); padding:var(--s5); color:#fff;
+}
+.related-card h5{font-size:15px; margin-bottom:6px; color:#fff;}
+.related-card p{font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:var(--s4);}
+.related-card .price{color:var(--gold); font-size:16px;}
+
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="../index.html" class="brand">
+        <svg viewBox="0 0 953 845" xmlns="http://www.w3.org/2000/svg"><path d="M185.08 260.292H60V200H446.532L474.491 228.752C475.246 229.528 475.246 230.764 474.491 231.54L446.532 260.292H231.776H185.08Z" fill="#8B5CF6"/><path d="M767.92 260.292H893V200H506.468L478.509 228.752C477.754 229.528 477.754 230.764 478.509 231.54L506.468 260.292H721.224H767.92Z" fill="#8B5CF6"/><path d="M244.067 544.13V645H184.045V256H244.067V506.472V544.13Z" fill="#8B5CF6"/><path d="M725.244 544.13V645H665.222V256H725.244V506.472V544.13Z" fill="#8B5CF6"/><path d="M450.551 645C425.926 645 401.502 640.157 377.28 630.472C353.059 620.383 331.663 604.241 313.093 586.888V526.5C326.011 540.625 370.216 578.413 389.997 586.888C409.778 595.362 430.164 599.6 451.157 599.6C477.397 599.6 498.389 593.143 514.133 580.229C529.877 567.315 537.749 550.366 537.749 529.381C537.749 512.835 533.914 499.517 526.244 489.428C518.977 478.936 509.087 470.663 496.572 464.61C484.058 458.153 470.332 452.503 455.395 447.66C440.862 442.817 426.127 437.773 411.191 432.527C396.658 427.28 383.134 420.42 370.619 411.945C358.105 403.471 348.012 392.574 340.342 379.257C333.076 365.536 329.442 348.183 329.442 327.198C329.442 304.599 334.489 284.824 344.581 267.875C355.077 250.926 369.61 237.81 388.18 228.528C406.75 218.843 446.424 214 452.368 214C457.519 214 461.361 215.5 465.649 220.5C469.15 224 471.284 226.499 474.652 230L468.65 236.5C467.149 238 467.149 238 464.648 240.5C460.147 245 457.646 248 445.641 260C424.245 260 412.604 265.454 398.474 277.56C384.749 289.667 377.886 305.204 377.886 324.171C377.886 339.103 381.519 351.21 388.786 360.492C396.456 369.773 406.548 377.441 419.063 383.494C431.577 389.144 445.101 394.39 459.634 399.233C474.571 403.672 489.306 408.717 503.839 414.367C518.776 420.016 532.501 427.28 545.016 436.159C557.53 445.037 567.421 456.74 574.687 471.268C582.358 485.393 586.193 503.755 586.193 526.354C586.193 563.078 574.082 592.134 549.86 613.522C525.638 634.507 492.535 645 450.551 645Z" fill="#8B5CF6"/></svg>
+        <span class="brand-word">THRIVE<b>SKILL</b>TECH</span>
+      </a>
+      <div class="nav-links">
+        <a href="../index.html#courses">Courses</a>
+        <a href="../index.html#bootcamp">Bootcamp</a>
+        <a href="../index.html#why">Why Us</a>
+        <a href="../index.html#founders">Founders</a>
+        <a href="../index.html#faq">FAQ</a>
+        <a href="../index.html#enroll">Contact</a>
+      </div>
+      <div class="nav-cta">
+        <a href="../index.html#enroll?course=Agentic%20AI%20and%20Automation%20%E2%80%94%20%E2%82%B920%2C000" class="btn btn-primary" style="padding:10px 20px; font-size:14px;">Enroll Now</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+<!-- ================= COURSE HERO ================= -->
+<div class="course-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../index.html#courses">Courses</a> &nbsp;/&nbsp; Agentic AI &amp; Automation</div>
+    <h1>Agentic AI &amp; Automation</h1>
+    <p class="lead">Build real AI agents with Python, LangChain, and LangGraph — from a single SEO agent to a multi-agent marketing team that researches, writes, edits, and reports on its own.</p>
+    <div class="course-hero-ctas">
+      <a href="../index.html#enroll?course=Agentic%20AI%20and%20Automation%20%E2%80%94%20%E2%82%B920%2C000" class="btn btn-primary">Enroll Now — ₹20,000</a>
+      <a href="https://wa.me/918369953959?text=Hi%20Thrive%20Skill%20Tech%2C%20I%27d%20like%20to%20know%20more%20about%20the%20Agentic%20AI%20and%20Automation%20%E2%80%94%20%E2%82%B920%2C000%20course." target="_blank" class="btn btn-secondary">Ask a Question</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= DETAIL ================= -->
+<section class="detail-wrap">
+  <div class="wrap">
+    <div class="detail-grid">
+      <div>
+        <h4>What's included</h4>
+        <ul class="detail-list">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 10–12 weeks, beginner to intermediate — no prior coding required</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 5 shippable agent projects, including a multi-agent marketing team</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Capstone project: your own AI marketing employee</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Certificate of completion</li>
+        </ul>
+
+        <h4 style="margin-top:8px;">Full syllabus</h4>
+        <div class="module-list" style="max-height:none;">
+          <div class="module-row"><span>Phase 1 — Technology foundations (web, APIs, cloud)</span><span class="hrs">✓</span></div>
+          <div class="module-row"><span>Phase 2 — AI &amp; LLM foundations, prompt engineering</span><span class="hrs">✓</span></div>
+          <div class="module-row"><span>Phase 3 — AI agents &amp; agentic systems architecture</span><span class="hrs">✓</span></div>
+          <div class="module-row"><span>Phase 4 — LangChain: models, chains, tools, memory</span><span class="hrs">✓</span></div>
+          <div class="module-row"><span>Phase 5 — LangGraph: states, nodes, human-in-the-loop</span><span class="hrs">✓</span></div>
+          <div class="module-row"><span>Phase 6 — Marketing automation projects (SEO, content, social agents)</span><span class="hrs">✓</span></div>
+          <div class="module-row"><span>Phase 7 — Retrieval-Augmented Generation &amp; vector databases</span><span class="hrs">✓</span></div>
+          <div class="module-row"><span>Phase 8 — Multi-agent marketing agency build</span><span class="hrs">✓</span></div>
+          <div class="module-row"><span>Phase 9 — Deployment: FastAPI, Streamlit, monitoring</span><span class="hrs">✓</span></div>
+          <div class="module-row"><span>Capstone — build your own AI marketing employee</span><span class="hrs">✓</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sticky-card">
+          <div class="amt">₹20,000</div>
+          <div class="amt-note">One-time enrollment fee</div>
+
+          <div class="rzp-box">
+            <div class="rzp-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Secure checkout via Razorpay
+            </div>
+            <button type="button" class="btn btn-primary btn-block" id="pay-ai" onclick="payWithRazorpay('Agentic AI and Automation', 20000, this)">Pay ₹20,000 Now</button>
+          </div>
+
+          <div class="rzp-divider">or</div>
+
+          <a href="../index.html#enroll?course=Agentic%20AI%20and%20Automation%20%E2%80%94%20%E2%82%B920%2C000" class="btn btn-secondary btn-block" style="margin-bottom:12px;">Enroll via Form</a>
+          <a href="https://wa.me/918369953959?text=Hi%20Thrive%20Skill%20Tech%2C%20I%27d%20like%20to%20know%20more%20about%20the%20Agentic%20AI%20and%20Automation%20%E2%80%94%20%E2%82%B920%2C000%20course." target="_blank" class="btn btn-secondary btn-block">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Chat on WhatsApp
+          </a>
+          <div style="border-top:1px solid var(--line); margin-top:var(--s5); padding-top:var(--s5); font-size:13px; color:var(--midnight); opacity:0.7;">
+            Certificate included · Practical, project-based training · Learning community access
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RELATED ================= -->
+<div class="related-strip">
+  <div class="wrap">
+    <h3>Other courses at Thrive Skill Tech</h3>
+    <div class="related-cards">
+        <div class="related-card">
+          <h5>Master's in Digital Marketing</h5>
+          <p>SEO, Google &amp; Meta Ads, and the full marketing stack.</p>
+          <div class="price">₹15,000</div>
+          <a href="digital-marketing.html" class="btn btn-secondary" style="padding:8px 16px; font-size:13px; margin-top:12px;">View Course</a>
+        </div>
+        <div class="related-card">
+          <h5>Content Creation &amp; Writing</h5>
+          <p>Copywriting, Canva, CapCut &amp; content strategy.</p>
+          <div class="price">₹10,000</div>
+          <a href="content-creation-writing.html" class="btn btn-secondary" style="padding:8px 16px; font-size:13px; margin-top:12px;">View Course</a>
+        </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <svg viewBox="0 0 953 845" xmlns="http://www.w3.org/2000/svg"><path d="M185.08 260.292H60V200H446.532L474.491 228.752C475.246 229.528 475.246 230.764 474.491 231.54L446.532 260.292H231.776H185.08Z" fill="#8B5CF6"/><path d="M767.92 260.292H893V200H506.468L478.509 228.752C477.754 229.528 477.754 230.764 478.509 231.54L506.468 260.292H721.224H767.92Z" fill="#8B5CF6"/><path d="M244.067 544.13V645H184.045V256H244.067V506.472V544.13Z" fill="#8B5CF6"/><path d="M725.244 544.13V645H665.222V256H725.244V506.472V544.13Z" fill="#8B5CF6"/><path d="M450.551 645C425.926 645 401.502 640.157 377.28 630.472C353.059 620.383 331.663 604.241 313.093 586.888V526.5C326.011 540.625 370.216 578.413 389.997 586.888C409.778 595.362 430.164 599.6 451.157 599.6C477.397 599.6 498.389 593.143 514.133 580.229C529.877 567.315 537.749 550.366 537.749 529.381C537.749 512.835 533.914 499.517 526.244 489.428C518.977 478.936 509.087 470.663 496.572 464.61C484.058 458.153 470.332 452.503 455.395 447.66C440.862 442.817 426.127 437.773 411.191 432.527C396.658 427.28 383.134 420.42 370.619 411.945C358.105 403.471 348.012 392.574 340.342 379.257C333.076 365.536 329.442 348.183 329.442 327.198C329.442 304.599 334.489 284.824 344.581 267.875C355.077 250.926 369.61 237.81 388.18 228.528C406.75 218.843 446.424 214 452.368 214C457.519 214 461.361 215.5 465.649 220.5C469.15 224 471.284 226.499 474.652 230L468.65 236.5C467.149 238 467.149 238 464.648 240.5C460.147 245 457.646 248 445.641 260C424.245 260 412.604 265.454 398.474 277.56C384.749 289.667 377.886 305.204 377.886 324.171C377.886 339.103 381.519 351.21 388.786 360.492C396.456 369.773 406.548 377.441 419.063 383.494C431.577 389.144 445.101 394.39 459.634 399.233C474.571 403.672 489.306 408.717 503.839 414.367C518.776 420.016 532.501 427.28 545.016 436.159C557.53 445.037 567.421 456.74 574.687 471.268C582.358 485.393 586.193 503.755 586.193 526.354C586.193 563.078 574.082 592.134 549.86 613.522C525.638 634.507 492.535 645 450.551 645Z" fill="#8B5CF6"/></svg>
+          <span class="brand-word" style="color:#fff;">THRIVE<b style="color:var(--gold);">SKILL</b>TECH</span>
+        </div>
+        <p style="max-width:280px; font-size:14px; color:rgba(255,255,255,0.6);">Skills today, success tomorrow. An AI-first career accelerator for marketers, creators, and builders.</p>
+        <div class="social-row">
+          <a href="https://x.com/thriveskilltech" target="_blank" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" color="#fff"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7.2l-5.6-7.3L4 22H1l8.1-9.3L.7 2h7.4l5.1 6.7L18.9 2Zm-1.3 18h2L6.5 4h-2l13.1 16Z"/></svg></a>
+          <a href="https://www.instagram.com/thriveskill_tech" target="_blank" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="https://www.facebook.com/share/1DKAHZraG8/" target="_blank" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H17V3.7c-.28-.04-1.24-.12-2.36-.12-2.33 0-3.93 1.42-3.93 4.03V10H8v3.1h2.7V21h2.8Z"/></svg></a>
+          <a href="https://in.linkedin.com/in/thrive-skills-5088b8426" target="_blank" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.76 2.65 4.76 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4V9Z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="../index.html#courses">Courses</a></li>
+          <li><a href="../index.html#bootcamp">Bootcamp</a></li>
+          <li><a href="../index.html#why">Why Us</a></li>
+          <li><a href="../index.html#enroll">Enroll Now</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li>thriveskilltech@gmail.com</li>
+          <li>+91 83699 53959</li>
+          <li><a href="https://wa.me/918369953959" target="_blank">Chat on WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Thrive Skill Tech. All rights reserved.</span>
+      <span>Empowering your AI-first career.</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/918369953959?text=Hi%20Thrive%20Skill%20Tech%2C%20I'd%20like%20to%20know%20more%20about%20your%20courses." target="_blank" aria-label="WhatsApp us">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.3.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.2-5-4.4-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.2.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.2-.3.3-.1.6.2.3.9 1.4 1.9 2.3 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.7.8c.2.1.4.2.4.3.1.2.1.9-.2 1.6Z"/></svg>
+</a>
+
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  // ---- Razorpay checkout wiring ----
+  // Set this to your deployed backend URL (see the backend README for deployment steps).
+  const BACKEND_URL = "REPLACE_WITH_YOUR_BACKEND_URL";
+
+  function payWithRazorpay(courseName, amount, buttonEl) {
+    if (BACKEND_URL.includes("REPLACE_WITH")) {
+      alert("Payments aren't connected yet — the backend URL still needs to be set. Use the enrollment form or WhatsApp for now.");
+      return;
+    }
+    const originalText = buttonEl.textContent;
+    buttonEl.disabled = true;
+    buttonEl.textContent = "Loading...";
+
+    fetch(BACKEND_URL + "/api/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: amount, courseName: courseName })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!data.orderId) throw new Error("No order id returned");
+
+      const options = {
+        key: data.keyId,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Thrive Skill Tech",
+        description: courseName,
+        order_id: data.orderId,
+        theme: { color: "#8B5CF6" },
+        handler: function(response) {
+          fetch(BACKEND_URL + "/api/verify-payment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(response)
+          })
+          .then(function(r) { return r.json(); })
+          .then(function(v) {
+            if (v.verified) {
+              alert("Payment successful! We'll confirm your seat shortly.");
+            } else {
+              alert("We couldn't verify that payment. Please contact us on WhatsApp with your payment ID.");
+            }
+          });
+        },
+        modal: {
+          ondismiss: function() {
+            buttonEl.disabled = false;
+            buttonEl.textContent = originalText;
+          }
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+      buttonEl.disabled = false;
+      buttonEl.textContent = originalText;
+    })
+    .catch(function(err) {
+      console.error("Razorpay checkout error:", err);
+      alert("Something went wrong starting checkout. Please try WhatsApp or the enrollment form instead.");
+      buttonEl.disabled = false;
+      buttonEl.textContent = originalText;
+    });
+  }
+</script>
+
+</body>
+</html>
